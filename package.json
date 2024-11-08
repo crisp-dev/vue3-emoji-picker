@@ -34,9 +34,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "_build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
-    "_prepare": "husky install",
+    "prepare": "husky install",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint --ext .ts,.js,.vue ./",
     "lint:fix": "eslint --fix --ext .ts,.js,.vue ./",
