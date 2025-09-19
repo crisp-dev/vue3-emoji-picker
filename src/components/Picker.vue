@@ -51,6 +51,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    disabledEmojis: {
+      type: Array,
+      default: () => [],
+    },
     disabledGroups: {
       type: Array,
       default: () => [],
@@ -131,6 +135,7 @@ export default defineComponent({
       hideGroupNames: props.hideGroupNames,
       staticTexts: { ...STATIC_TEXTS, ...props.staticTexts },
       disableStickyGroupNames: props.disableStickyGroupNames,
+      disabledEmojis: props.disabledEmojis,
       disabledGroups: props.disabledGroups,
       groupNames: { ...GROUP_NAMES, ...props.groupNames },
       disableSkinTones: props.disableSkinTones,

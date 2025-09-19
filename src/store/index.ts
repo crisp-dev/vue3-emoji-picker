@@ -15,6 +15,7 @@ const defaultOptions: Record<string, any> = {
   hideGroupIcons: false,
   hideGroupNames: false,
   staticTexts: {},
+  disabledEmojis: [],
   disabledGroups: [],
   groupNames: {},
   displayRecent: false,
@@ -39,11 +40,19 @@ export default function Store(): Store {
     additionalGroups: {} as EmojiRecord,
     recent: [],
     get emojis() {
-      return {
+      let allEmojis = {
         recent: this.recent,
         ...this.options.additionalGroups,
         ...emojis,
       } as EmojiRecord
+
+      return Object.entries(allEmojis).reduce((acc, [group, emojis]) => {
+        const filteredEmojis = (emojis as Emoji[]).filter(
+          (emoji: Emoji) => !this.options.disabledEmojis.includes(emoji.u)
+        )
+        acc[group as keyof EmojiRecord] = filteredEmojis
+        return acc
+      }, {} as EmojiRecord)
     },
     get disabled() {
       let disabled = Array.isArray(this.options.disabledGroups)

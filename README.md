@@ -41,9 +41,9 @@ function onSelectEmoji(emoji) {
   console.log(emoji)
   /*
     // result
-    { 
-        i: "😚", 
-        n: ["kissing face"], 
+    {
+        i: "😚",
+        n: ["kissing face"],
         r: "1f61a", // with skin tone
         t: "neutral", // skin tone
         u: "1f61a" // without tone
@@ -56,12 +56,13 @@ function onSelectEmoji(emoji) {
 
 | Prop                       | Type    | Default Value | Description                                                                                 |
 | :------------------------- | :------ | :------------ | :------------------------------------------------------------------------------------------ |
-| native                     | Boolean | false         | Load native emoji instead of image.                                                         |
-| hide-search                | Boolean | false          | Show/hide search input.                                                                     |
-| hide-group-icons           | Boolean | false         | Show/hide header group icons.                                                               |
-| hide-group-names           | Boolean | false         | Show/hide group names.                                                                      |
+| native                     | Boolean | false         | Load native emoji instead of image                                                          |
+| hide-search                | Boolean | false         | Show/hide search input                                                                      |
+| hide-group-icons           | Boolean | false         | Show/hide header group icons                                                                |
+| hide-group-names           | Boolean | false         | Show/hide group names                                                                       |
+| disabled-emojis            | Array   | []            | Disable any emoji by unicode                                                                |
 | disable-sticky-group-names | Boolean | false         | Disable sticky for group names                                                              |
-| disable-skin-tones         | Boolean | false         | Disable skin tones.                                                                         |
+| disable-skin-tones         | Boolean | false         | Disable skin tones                                                                          |
 | disabled-groups            | Array   | []            | Disable any group/category. See [Available groups](#available-groups)                       |
 | group-names                | Object  | {}            | Change any group name. See [Default group names](#default-group-names)                      |
 | static-texts               | Object  | Object        | See [static-texts](#propsstatic-texts) table                                                |
