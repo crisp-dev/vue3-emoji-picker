@@ -34,7 +34,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "_build": "vue-tsc --noEmit && vite build",
     "serve": "vite preview",
     "prepare": "husky install",
     "type-check": "vue-tsc --noEmit",
