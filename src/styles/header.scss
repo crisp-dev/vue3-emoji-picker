@@ -18,7 +18,7 @@
         transition: 200ms;
 
         &.v3-is-hidden {
-          display: none;
+          display: none !important;
         }
 
         &:first-child,
