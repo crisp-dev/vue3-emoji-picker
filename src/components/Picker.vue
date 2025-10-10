@@ -11,7 +11,7 @@
 /**
  * External dependencies
  */
-import { defineComponent, provide, ref, PropType, toRaw } from 'vue'
+import { defineComponent, provide, ref, PropType, toRaw, watch } from 'vue'
 
 /**
  * Internal dependencies
@@ -103,6 +103,10 @@ export default defineComponent({
       type: String as PropType<ColorTheme>,
       default: 'light',
     },
+    searchQuery: {
+      type: String as PropType<string>,
+      default: null,
+    },
   },
   emits: {
     'update:text': (text: string) => true,
@@ -147,6 +151,19 @@ export default defineComponent({
       groupIcons: props.groupIcons,
       colorTheme: COLOR_THEMES.includes(props.theme) ? props.theme : 'light',
     })
+
+    /**f
+     * Watch for searchQuery prop changes and update store search
+     */
+    watch(
+      () => props.searchQuery,
+      (newSearchQuery) => {
+        if (typeof newSearchQuery === 'string') {
+          store.updateSearch(newSearchQuery)
+        }
+      },
+      { immediate: true }
+    )
 
     /**
      * (provide) make available for entire app.
