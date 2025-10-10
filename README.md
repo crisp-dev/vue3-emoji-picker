@@ -74,6 +74,7 @@ function onSelectEmoji(emoji) {
 | group-icons                | Object  | {}            | Override group icons by passing svg's on keys                                               |
 | display-recent             | Boolean | false         | Display Recently used emojis                                                                |
 | theme                      | String  | 'light'       | Available options, 'light', 'dark', and 'auto'                                              |
+| search-query               | String  | null          | Search with custom query                                                                    |
 
 ## Static text option (`props['static-texts']`)
 
