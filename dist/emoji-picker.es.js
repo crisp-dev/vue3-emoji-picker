@@ -14334,6 +14334,10 @@ const _sfc_main = defineComponent({
     theme: {
       type: String,
       default: "light"
+    },
+    searchQuery: {
+      type: String,
+      default: null
     }
   },
   emits: {
@@ -14366,6 +14370,15 @@ const _sfc_main = defineComponent({
       groupIcons: props.groupIcons,
       colorTheme: COLOR_THEMES.includes(props.theme) ? props.theme : "light"
     });
+    watch(
+      () => props.searchQuery,
+      (newSearchQuery) => {
+        if (typeof newSearchQuery === "string") {
+          store.updateSearch(newSearchQuery);
+        }
+      },
+      { immediate: true }
+    );
     provide("store", store);
     return {
       type: props.pickerType,

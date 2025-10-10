@@ -86,6 +86,10 @@ declare const _default: DefineComponent<{
         type: PropType<ColorTheme>;
         default: string;
     };
+    searchQuery: {
+        type: PropType<string>;
+        default: null;
+    };
 }, {
     type: string;
     input: Ref<string>;
@@ -170,6 +174,10 @@ declare const _default: DefineComponent<{
         type: PropType<ColorTheme>;
         default: string;
     };
+    searchQuery: {
+        type: PropType<string>;
+        default: null;
+    };
 }>> & {
     onSelect?: ((emoji: EmojiExt) => any) | undefined;
     "onUpdate:text"?: ((text: string) => any) | undefined;
@@ -193,6 +201,7 @@ declare const _default: DefineComponent<{
     offset: number;
     pickerType: string;
     theme: ColorTheme;
+    searchQuery: string;
 }>;
 export default _default;
 
