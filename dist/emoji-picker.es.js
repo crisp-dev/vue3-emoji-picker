@@ -13825,6 +13825,7 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
                 return openBlock(), createElementBlock("button", {
                   key: emoji.r,
                   type: "button",
+                  role: "button",
                   onMouseenter: ($event) => _ctx.handleMouseEnter(emoji),
                   onClick: ($event) => _ctx.handleClick(emoji)
                 }, [
