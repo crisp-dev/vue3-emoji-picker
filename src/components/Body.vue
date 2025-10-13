@@ -1,7 +1,7 @@
 <template>
   <div class="v3-body">
     <div ref="bodyInner" :class="platform" class="v3-body-inner">
-      <template v-if="orderedKeys.length">
+      <template v-if="orderedKeys.length && !isEmpty">
         <div v-for="key of orderedKeys" :id="key" :key="key" class="v3-group">
           <template v-if="emojis[key]">
             <h5 v-if="hasGroupNames" :class="isSticky ? `v3-sticky` : ``">
@@ -31,7 +31,11 @@
           </template>
         </div>
       </template>
-      <span v-else class="v3-no-result"> No emoji has been found! </span>
+      <template v-else>
+        <slot name="empty">
+          <span class="v3-no-result"> No emoji has been found! </span>
+        </slot>
+      </template>
     </div>
   </div>
 </template>
@@ -83,6 +87,12 @@ export default defineComponent({
         state.skinTone,
         state.options.disabledGroups
       )
+    })
+
+    const isEmpty = computed(() => {
+      return orderedKeys.every((key) => {
+        return !emojis.value[key] || !emojis.value[key].length
+      })
     })
 
     const _this = getCurrentInstance()
@@ -155,6 +165,7 @@ export default defineComponent({
       platform,
       groupNames,
       orderedKeys,
+      isEmpty,
     }
   },
 })

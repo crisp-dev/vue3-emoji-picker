@@ -37,7 +37,11 @@
           :class="'v3-color-theme-' + colorTheme"
         >
           <Header />
-          <Body @select="onSelect" />
+          <Body @select="onSelect">
+            <template #empty>
+              <slot name="empty" />
+            </template>
+          </Body>
           <Footer />
         </div>
       </div>
@@ -45,7 +49,11 @@
   </div>
   <div v-else class="v3-emoji-picker" :class="'v3-color-theme-' + colorTheme">
     <Header />
-    <Body @select="onSelect" />
+    <Body @select="onSelect">
+      <template #empty>
+        <slot name="empty" />
+      </template>
+    </Body>
     <Footer />
   </div>
 </template>
