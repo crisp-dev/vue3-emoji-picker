@@ -12,6 +12,7 @@
                 v-for="emoji in emojis[key]"
                 :key="emoji.r"
                 type="button"
+                role="button"
                 @mouseenter="handleMouseEnter(emoji)"
                 @click="handleClick(emoji)"
               >
