@@ -4,7 +4,11 @@
     :text="input"
     @select="$emit('select', $event)"
     @update:text="onChangeText"
-  />
+  >
+    <template #empty>
+      <slot name="empty" />
+    </template>
+  </picker-root>
 </template>
 
 <script lang="ts">
