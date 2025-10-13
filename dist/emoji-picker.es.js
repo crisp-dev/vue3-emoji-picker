@@ -1,4 +1,4 @@
-import { reactive, readonly, toRaw, defineComponent, inject, ref, computed, getCurrentInstance, watch, openBlock, createElementBlock, createElementVNode, normalizeClass, Fragment, renderList, withDirectives, toDisplayString, vShow, createCommentVNode, vModelText, onMounted, onBeforeUnmount, resolveComponent, createVNode, provide, createBlock } from "vue";
+import { reactive, readonly, toRaw, defineComponent, inject, ref, computed, getCurrentInstance, watch, openBlock, createElementBlock, createElementVNode, normalizeClass, Fragment, renderList, toDisplayString, createCommentVNode, withDirectives, vModelText, onMounted, onBeforeUnmount, resolveComponent, createVNode, provide, createBlock } from "vue";
 const EMOJI_REMOTE_SRC = "https://cdn.jsdelivr.net/npm/emoji-datasource-apple@6.0.1/img/apple/64";
 const GROUP_NAMES = {
   recent: "Recently used",
@@ -13815,31 +13815,29 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
           key,
           class: "v3-group"
         }, [
-          _ctx.hasGroupNames ? withDirectives((openBlock(), createElementBlock("h5", {
-            key: 0,
-            class: normalizeClass(_ctx.isSticky ? `v3-sticky` : ``)
-          }, toDisplayString(_ctx.groupNames[key]), 3)), [
-            [vShow, _ctx.emojis[key]]
-          ]) : createCommentVNode("", true),
-          withDirectives(createElementVNode("div", _hoisted_3$3, [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.emojis[key], (emoji) => {
-              return openBlock(), createElementBlock("button", {
-                key: emoji.r,
-                type: "button",
-                onMouseenter: ($event) => _ctx.handleMouseEnter(emoji),
-                onClick: ($event) => _ctx.handleClick(emoji)
-              }, [
-                _ctx.native ? (openBlock(), createElementBlock("span", _hoisted_5$3, toDisplayString(_ctx.unicodeToEmoji(emoji.r)), 1)) : (openBlock(), createElementBlock("img", {
-                  key: 1,
-                  src: _ctx.EMOJI_REMOTE_SRC + `/${emoji.r}.png`,
-                  alt: emoji.n[0],
-                  onError: ($event) => _ctx.handleError($event, emoji.r)
-                }, null, 40, _hoisted_6$2))
-              ], 40, _hoisted_4$3);
-            }), 128))
-          ], 512), [
-            [vShow, _ctx.emojis[key]]
-          ])
+          _ctx.emojis[key] ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [
+            _ctx.hasGroupNames ? (openBlock(), createElementBlock("h5", {
+              key: 0,
+              class: normalizeClass(_ctx.isSticky ? `v3-sticky` : ``)
+            }, toDisplayString(_ctx.groupNames[key]), 3)) : createCommentVNode("", true),
+            createElementVNode("div", _hoisted_3$3, [
+              (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.emojis[key], (emoji) => {
+                return openBlock(), createElementBlock("button", {
+                  key: emoji.r,
+                  type: "button",
+                  onMouseenter: ($event) => _ctx.handleMouseEnter(emoji),
+                  onClick: ($event) => _ctx.handleClick(emoji)
+                }, [
+                  _ctx.native ? (openBlock(), createElementBlock("span", _hoisted_5$3, toDisplayString(_ctx.unicodeToEmoji(emoji.r)), 1)) : (openBlock(), createElementBlock("img", {
+                    key: 1,
+                    src: _ctx.EMOJI_REMOTE_SRC + `/${emoji.r}.png`,
+                    alt: emoji.n[0],
+                    onError: ($event) => _ctx.handleError($event, emoji.r)
+                  }, null, 40, _hoisted_6$2))
+                ], 40, _hoisted_4$3);
+              }), 128))
+            ])
+          ], 64)) : createCommentVNode("", true)
         ], 8, _hoisted_2$3);
       }), 128)) : (openBlock(), createElementBlock("span", _hoisted_7$1, " No emoji has been found! "))
     ], 2)
