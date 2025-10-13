@@ -3,33 +3,31 @@
     <div ref="bodyInner" :class="platform" class="v3-body-inner">
       <template v-if="orderedKeys.length">
         <div v-for="key of orderedKeys" :id="key" :key="key" class="v3-group">
-          <h5
-            v-show="emojis[key]"
-            v-if="hasGroupNames"
-            :class="isSticky ? `v3-sticky` : ``"
-          >
-            {{ groupNames[key] }}
-          </h5>
-          <div v-show="emojis[key]" class="v3-emojis">
-            <button
-              v-for="emoji in emojis[key]"
-              :key="emoji.r"
-              type="button"
-              @mouseenter="handleMouseEnter(emoji)"
-              @click="handleClick(emoji)"
-            >
-              <!-- Native emoji -->
-              <span v-if="native">{{ unicodeToEmoji(emoji.r) }}</span>
+          <template v-if="emojis[key]">
+            <h5 v-if="hasGroupNames" :class="isSticky ? `v3-sticky` : ``">
+              {{ groupNames[key] }}
+            </h5>
+            <div class="v3-emojis">
+              <button
+                v-for="emoji in emojis[key]"
+                :key="emoji.r"
+                type="button"
+                @mouseenter="handleMouseEnter(emoji)"
+                @click="handleClick(emoji)"
+              >
+                <!-- Native emoji -->
+                <span v-if="native">{{ unicodeToEmoji(emoji.r) }}</span>
 
-              <!-- Load from CDN when options.native = true -->
-              <img
-                v-else
-                :src="EMOJI_REMOTE_SRC + `/${emoji.r}.png`"
-                :alt="emoji.n[0]"
-                @error="handleError($event, emoji.r)"
-              />
-            </button>
-          </div>
+                <!-- Load from CDN when options.native = true -->
+                <img
+                  v-else
+                  :src="EMOJI_REMOTE_SRC + `/${emoji.r}.png`"
+                  :alt="emoji.n[0]"
+                  @error="handleError($event, emoji.r)"
+                />
+              </button>
+            </div>
+          </template>
         </div>
       </template>
       <span v-else class="v3-no-result"> No emoji has been found! </span>
