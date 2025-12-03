@@ -13,11 +13,15 @@ import {
  * @param unicode - emoji unicode
  */
 export function unicodeToEmoji(unicode: string) {
-  return unicode
-    .split('-')
-    .map((hex) => parseInt(hex, 16))
-    .map((hex) => String.fromCodePoint(hex))
-    .join('')
+  try {
+    return unicode
+      .split('-')
+        .map((hex) => parseInt(hex, 16))
+        .map((hex) => String.fromCodePoint(hex))
+        .join('')
+  } catch {
+    return "﹖"
+  }
 }
 
 /**
