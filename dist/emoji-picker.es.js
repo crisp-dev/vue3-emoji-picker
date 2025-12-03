@@ -1,4 +1,4 @@
-import { reactive, readonly, toRaw, defineComponent, inject, ref, computed, getCurrentInstance, watch, openBlock, createElementBlock, createElementVNode, normalizeClass, Fragment, renderList, toDisplayString, createCommentVNode, withDirectives, vModelText, onMounted, onBeforeUnmount, resolveComponent, createVNode, provide, createBlock } from "vue";
+import { reactive, readonly, toRaw, defineComponent, inject, ref, computed, getCurrentInstance, watch, openBlock, createElementBlock, createElementVNode, normalizeClass, Fragment, renderList, toDisplayString, createCommentVNode, renderSlot, withDirectives, vModelText, onMounted, onBeforeUnmount, resolveComponent, createVNode, withCtx, provide, createBlock } from "vue";
 const EMOJI_REMOTE_SRC = "https://cdn.jsdelivr.net/npm/emoji-datasource-apple@6.0.1/img/apple/64";
 const GROUP_NAMES = {
   recent: "Recently used",
@@ -13663,7 +13663,11 @@ var createPopper = /* @__PURE__ */ popperGenerator({
 });
 var smileys_people = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHBhdGggZD0iTSAxNiA0IEMgOS4zODI4MTMgNCA0IDkuMzgyODEzIDQgMTYgQyA0IDIyLjYxNzE4OCA5LjM4MjgxMyAyOCAxNiAyOCBDIDIyLjYxNzE4OCAyOCAyOCAyMi42MTcxODggMjggMTYgQyAyOCA5LjM4MjgxMyAyMi42MTcxODggNCAxNiA0IFogTSAxNiA2IEMgMjEuNTM1MTU2IDYgMjYgMTAuNDY0ODQ0IDI2IDE2IEMgMjYgMjEuNTM1MTU2IDIxLjUzNTE1NiAyNiAxNiAyNiBDIDEwLjQ2NDg0NCAyNiA2IDIxLjUzNTE1NiA2IDE2IEMgNiAxMC40NjQ4NDQgMTAuNDY0ODQ0IDYgMTYgNiBaIE0gMTEuNSAxMiBDIDEwLjY3MTg3NSAxMiAxMCAxMi42NzE4NzUgMTAgMTMuNSBDIDEwIDE0LjMyODEyNSAxMC42NzE4NzUgMTUgMTEuNSAxNSBDIDEyLjMyODEyNSAxNSAxMyAxNC4zMjgxMjUgMTMgMTMuNSBDIDEzIDEyLjY3MTg3NSAxMi4zMjgxMjUgMTIgMTEuNSAxMiBaIE0gMjAuNSAxMiBDIDE5LjY3MTg3NSAxMiAxOSAxMi42NzE4NzUgMTkgMTMuNSBDIDE5IDE0LjMyODEyNSAxOS42NzE4NzUgMTUgMjAuNSAxNSBDIDIxLjMyODEyNSAxNSAyMiAxNC4zMjgxMjUgMjIgMTMuNSBDIDIyIDEyLjY3MTg3NSAyMS4zMjgxMjUgMTIgMjAuNSAxMiBaIE0gMTAuODEyNSAxOSBMIDkuMDkzNzUgMjAgQyAxMC40NzY1NjMgMjIuMzg2NzE5IDEzLjA0Njg3NSAyNCAxNiAyNCBDIDE4Ljk1MzEyNSAyNCAyMS41MjM0MzggMjIuMzg2NzE5IDIyLjkwNjI1IDIwIEwgMjEuMTg3NSAxOSBDIDIwLjE0ODQzOCAyMC43OTI5NjkgMTguMjI2NTYzIDIyIDE2IDIyIEMgMTMuNzczNDM4IDIyIDExLjg1MTU2MyAyMC43OTI5NjkgMTAuODEyNSAxOSBaIi8+PC9zdmc+";
 function unicodeToEmoji(unicode) {
-  return unicode.split("-").map((hex) => parseInt(hex, 16)).map((hex) => String.fromCodePoint(hex)).join("");
+  try {
+    return unicode.split("-").map((hex) => parseInt(hex, 16)).map((hex) => String.fromCodePoint(hex)).join("");
+  } catch {
+    return "\uFE56";
+  }
 }
 function filterEmojis(emojis2, keyword, skinTone, disabledGroups = []) {
   const _emojiData = {};
@@ -13730,6 +13734,11 @@ const _sfc_main$4 = defineComponent({
         state.options.disabledGroups
       );
     });
+    const isEmpty = computed(() => {
+      return orderedKeys.every((key) => {
+        return !emojis2.value[key] || !emojis2.value[key].length;
+      });
+    });
     const _this = getCurrentInstance();
     const hasGroupNames = computed(() => !state.options.hideGroupNames);
     const isSticky = computed(() => !state.options.disableStickyGroupNames);
@@ -13789,7 +13798,8 @@ const _sfc_main$4 = defineComponent({
       isSticky,
       platform,
       groupNames,
-      orderedKeys
+      orderedKeys,
+      isEmpty
     };
   }
 });
@@ -13799,17 +13809,14 @@ const _hoisted_3$3 = { class: "v3-emojis" };
 const _hoisted_4$3 = ["onMouseenter", "onClick"];
 const _hoisted_5$3 = { key: 0 };
 const _hoisted_6$2 = ["src", "alt", "onError"];
-const _hoisted_7$1 = {
-  key: 1,
-  class: "v3-no-result"
-};
+const _hoisted_7$1 = /* @__PURE__ */ createElementVNode("span", { class: "v3-no-result" }, " No emoji has been found! ", -1);
 function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
   return openBlock(), createElementBlock("div", _hoisted_1$3, [
     createElementVNode("div", {
       ref: "bodyInner",
       class: normalizeClass([_ctx.platform, "v3-body-inner"])
     }, [
-      _ctx.orderedKeys.length ? (openBlock(true), createElementBlock(Fragment, { key: 0 }, renderList(_ctx.orderedKeys, (key) => {
+      _ctx.orderedKeys.length && !_ctx.isEmpty ? (openBlock(true), createElementBlock(Fragment, { key: 0 }, renderList(_ctx.orderedKeys, (key) => {
         return openBlock(), createElementBlock("div", {
           id: key,
           key,
@@ -13840,7 +13847,9 @@ function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
             ])
           ], 64)) : createCommentVNode("", true)
         ], 8, _hoisted_2$3);
-      }), 128)) : (openBlock(), createElementBlock("span", _hoisted_7$1, " No emoji has been found! "))
+      }), 128)) : renderSlot(_ctx.$slots, "empty", { key: 1 }, () => [
+        _hoisted_7$1
+      ])
     ], 2)
   ]);
 }
@@ -14237,7 +14246,12 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
           class: normalizeClass(["v3-emoji-picker", "v3-color-theme-" + _ctx.colorTheme])
         }, [
           createVNode(_component_Header),
-          createVNode(_component_Body, { onSelect: _ctx.onSelect }, null, 8, ["onSelect"]),
+          createVNode(_component_Body, { onSelect: _ctx.onSelect }, {
+            empty: withCtx(() => [
+              renderSlot(_ctx.$slots, "empty")
+            ]),
+            _: 3
+          }, 8, ["onSelect"]),
           createVNode(_component_Footer)
         ], 2)
       ], 2)
@@ -14247,7 +14261,12 @@ function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
     class: normalizeClass(["v3-emoji-picker", "v3-color-theme-" + _ctx.colorTheme])
   }, [
     createVNode(_component_Header),
-    createVNode(_component_Body, { onSelect: _ctx.onSelect }, null, 8, ["onSelect"]),
+    createVNode(_component_Body, { onSelect: _ctx.onSelect }, {
+      empty: withCtx(() => [
+        renderSlot(_ctx.$slots, "empty")
+      ]),
+      _: 3
+    }, 8, ["onSelect"]),
     createVNode(_component_Footer)
   ], 2));
 }
@@ -14393,7 +14412,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     text: _ctx.input,
     onSelect: _cache[0] || (_cache[0] = ($event) => _ctx.$emit("select", $event)),
     "onUpdate:text": _ctx.onChangeText
-  }, null, 8, ["type", "text", "onUpdate:text"]);
+  }, {
+    empty: withCtx(() => [
+      renderSlot(_ctx.$slots, "empty")
+    ]),
+    _: 3
+  }, 8, ["type", "text", "onUpdate:text"]);
 }
 var Picker = /* @__PURE__ */ _export_sfc(_sfc_main, [["render", _sfc_render]]);
 var index = "";
